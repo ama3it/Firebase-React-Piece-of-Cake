@@ -2,7 +2,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "./firebase-config";
 import { useState } from "react";
 
-type Hero = {
+export type Hero = {
   name: string;
   anime: string;
   quirk: string;
@@ -21,7 +21,7 @@ const AddHero = () => {
   const putHero = async (data: Hero) => {
     // We are using slug variable to assign a unique document ID of our own.
     try {
-      let collectionName = import.meta.env.VITE_COLLECTON_NAME;
+      const collectionName = import.meta.env.VITE_COLLECTON_NAME;
       await setDoc(doc(db, collectionName, data.slug), {
         name: data.name,
         anime: data.anime,
@@ -38,7 +38,7 @@ const AddHero = () => {
   const addHero = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Just keep in mind that this might not be completely unique, and for a production application, you might want to use a library like nanoid for more reliable unique identifiers.
-    let slug = hero.name.trim() + Math.floor(Math.random() * 100) + 1;
+    const slug = hero.name.trim() + Math.floor(Math.random() * 100) + 1;
     putHero({ ...hero, slug: slug });
   };
 
